@@ -42,7 +42,7 @@
           <div id="usage-bar" class="bg-blue-500 h-1.5 w-0 transition-all duration-500"></div>
         </div>
         <button onclick="showPaywall()" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white text-xs font-semibold py-2.5 px-3 rounded-md shadow-lg transition">
-          🚀 Go Pro - Lifetime Access
+          🚀 Upgrade - From $0.10 / ₦150
         </button>
       </div>
     </div>
@@ -82,8 +82,7 @@
           Capture Language: <strong class="text-gray-200">English (US)</strong>
         </div>
         <button id="start-btn" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-3.5 rounded-xl shadow-lg shadow-blue-600/10 transition flex items-center justify-center space-x-2">
-          <span>🎙️</span>
-          <span>Start Live Captions</span>
+          <span>🎙️</span> <span>Start Live Captions</span>
         </button>
       </div>
     </section>
@@ -104,28 +103,54 @@
 
   <!-- ================= POPUP PAYWALL MODAL INTERFACE ================= -->
   <div id="paywall-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-gray-900 border border-gray-800 rounded-2xl max-w-sm w-full p-6 shadow-2xl relative">
+    <div class="bg-gray-900 border border-gray-800 rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
       <!-- Close Button Icon Trigger -->
       <button onclick="closePaywall()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-300 text-2xl font-light">&times;</button>
       
       <div class="text-center">
         <span class="text-4xl">👑</span>
-        <h3 class="text-xl font-bold mt-3 mb-2">Upgrade to ScribeSwift Pro</h3>
-        <p class="text-sm text-gray-400 mb-6">Unlock full automated features and bypass limits entirely.</p>
+        <h3 class="text-xl font-bold mt-3 mb-1">Choose Your Budget Plan</h3>
+        <p class="text-sm text-gray-400 mb-6">Unlock all premium file transcription capabilities instantly.</p>
         
-        <!-- Value Features Summary Checklist Panel -->
-        <div class="bg-gray-950 rounded-xl p-4 border border-gray-800 mb-6 text-left space-y-2.5 text-sm">
-          <div class="flex items-center text-gray-300">✅ <span class="ml-2">Unlimited Live Captions Tracking</span></div>
-          <div class="flex items-center text-gray-300">✅ <span class="ml-2">Full Audio & Video File Uploads</span></div>
-          <div class="flex items-center text-gray-300">✅ <span class="ml-2">High-Speed AI Processing Engine</span></div>
+        <!-- Two Competitive Dynamic Pricing Column Options -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          
+          <!-- Plan Option 1: Micro Day Pass -->
+          <div class="bg-gray-950 border border-gray-800 rounded-xl p-4 flex flex-col justify-between text-left">
+            <div>
+              <h4 class="text-sm font-bold text-blue-400">24hr Access Pass</h4>
+              <p class="text-xs text-gray-400 mt-1">Perfect for quick single projects.</p>
+            </div>
+            <div class="mt-4">
+              <span class="text-2xl font-black text-white">$0.10</span>
+              <span class="text-xs text-gray-500 block">or local currency equivalent</span>
+              <!-- Paste your $0.10 / Day Pass Paystack Page link below -->
+              <a href="https://paystack.com" target="_blank" class="mt-3 block text-center bg-gray-800 hover:bg-gray-700 text-white text-xs font-semibold py-2 px-3 rounded-lg transition">
+                Get Day Pass
+              </a>
+            </div>
+          </div>
+
+          <!-- Plan Option 2: Ultra-Cheap Subscription -->
+          <div class="bg-gray-950 border-2 border-blue-500 rounded-xl p-4 flex flex-col justify-between text-left relative">
+            <span class="absolute -top-2.5 right-3 bg-blue-600 text-white font-bold text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider">Best Value</span>
+            <div>
+              <h4 class="text-sm font-bold text-indigo-400">Monthly Pro Tier</h4>
+              <p class="text-xs text-gray-400 mt-1">Unlimited usage for 30 full days.</p>
+            </div>
+            <div class="mt-4">
+              <span class="text-2xl font-black text-white">$1.00</span>
+              <span class="text-xs text-gray-500 block">/ month recurring subscription</span>
+              <!-- Paste your $1.00 Monthly Paystack Subscription Link below -->
+              <a href="https://paystack.com" target="_blank" class="mt-3 block text-center bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2 px-3 rounded-lg transition shadow-md shadow-blue-600/20">
+                Subscribe Pro
+              </a>
+            </div>
+          </div>
+
         </div>
 
-        <!-- DYNAMIC PAYSTACK OUTBOUND PAYMENT HYPERLINK LINK -->
-        <!-- Paste your exact custom Paystack link URL directly inside the href attribute below -->
-        <a href="https://paystack.com" target="_blank" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition shadow-lg shadow-blue-600/20">
-          Unlock Pro Access
-        </a>
-        <p class="text-xs text-gray-500 mt-3">One-time fee payment. Secured payments powered via Paystack.</p>
+        <p class="text-[11px] text-gray-500">Secured localized digital payments processed via Paystack [finance].</p>
       </div>
     </div>
   </div>
@@ -145,21 +170,3 @@
         fileView.classList.add('hidden');
         viewTitle.innerText = "Live Captions Studio";
         navLive.className = "w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition bg-blue-600/10 text-blue-400 border border-blue-500/20";
-        navFile.className = "w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition text-gray-400 hover:bg-gray-800 hover:text-gray-200";
-      } else {
-        liveView.classList.add('hidden');
-        fileView.classList.remove('hidden');
-        viewTitle.innerText = "File Upload Dashboard";
-        navFile.className = "w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition bg-blue-600/10 text-blue-400 border border-blue-500/20";
-        navLive.className = "w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition text-gray-400 hover:bg-gray-800 hover:text-gray-200";
-      }
-    }
-
-    // Modal UI Interactivity Controllers
-    function showPaywall() { document.getElementById('paywall-modal').classList.remove('hidden'); }
-    function closePaywall() { document.getElementById('paywall-modal').classList.add('hidden'); }
-
-    // --- INTEGRATED NATIVE LIVE SPEECH TRANSCRIBER ENGINE ENGINE ---
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
