@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ScribeLive AI - Captions & Transcripts</title>
+  <!-- Tailwind CSS CDN for instant styling -->
+  <script src="https://tailwindcss.com"></script>
+</head>
+<body class="bg-gray-950 text-gray-100 font-sans h-screen flex flex-col md:flex-row overflow-hidden">
+
+  <!-- SIDEBAR NAVIGATION -->
+  <aside class="w-full md:w-64 bg-gray-900 border-b md:border-b-0 md:border-r border-gray-800 p-6 flex flex-col justify-between">
+    <div>
+      <div class="flex items-center space-x-3 mb-8">
+        <span class="text-2xl">⚡</span>
+        <h1 class="text-xl font-bold tracking-tight bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">ScribeLive AI</h1>
+      </div>
+      
+      <nav class="space-y-2">
+        <button onclick="switchTab('live')" id="nav-live" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition bg-blue-600/10 text-blue-400 border border-blue-500/20">
+          <span>🎙️</span>
+          <span>Live Captions</span>
+        </button>
+        <button onclick="switchTab('file')" id="nav-file" class="w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition text-gray-400 hover:bg-gray-800 hover:text-gray-200">
+          <span>📁</span>
+          <span>File Transcripts</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Free Tier Status / Upsell Box -->
+    <div class="mt-auto pt-6 border-t border-gray-800">
+      <div class="bg-gray-800/50 rounded-xl p-4 border border-gray-700/50">
+        <div class="flex justify-between text-xs text-gray-400 mb-1">
+          <span>Daily Free Usage</span>
+          <span id="usage-text">0 / 10 min</span>
+        </div>
+        <div class="w-full bg-gray-700 h-1.5 rounded-full overflow-hidden mb-3">
+          <div id="usage-bar" class="bg-blue-500 h-1.5 w-0 transition-all duration-500"></div>
+        </div>
+        <button onclick="showPaywall()" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white text-xs font-semibold py-2 px-3 rounded-md shadow-lg transition">
+          🚀 Go Pro - $9 Lifetime
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN APP CONTAINER -->
+  <main class="flex-1 flex flex-col h-full overflow-hidden">
+    
+    <!-- TOP HEADER BAR -->
+    <header class="h-16 border-b border-gray-800 px-6 flex items-center justify-between bg-gray-900/30 backdrop-blur">
+      <h2 id="view-title" class="text-lg font-semibold text-gray-200">Live Captions Studio</h2>
+      <div class="text-xs text-gray-400 bg-gray-800 px-3 py-1.5 rounded-full border border-gray-700">
+        Status: <span id="status-indicator" class="text-emerald-400 font-medium">Ready</span>
+      </div>
+    </header>
+
+    <!-- VIEW 1: LIVE CAPTIONS TAB -->
+    <section id="view-live" class="flex-1 flex flex-col p-6 overflow-hidden">
+      <!-- The scrolling display area for captions -->
+      <div id="caption-display" class="flex-1 bg-gray-900 border border-gray-800 rounded-2xl p-6 text-xl md:text-2xl leading-relaxed overflow-y-auto whitespace-pre-wrap select-text shadow-inner">
+        <p class="text-gray-500 text-base italic">Your real-time captions will appear right here when you hit start...</p>
+      </div>
+
+      <!-- Live Controls Menu -->
+      <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 bg-gray-900/60 p-4 border border-gray-800 rounded-xl">
+        <div class="text-sm text-gray-400">
+          Language: <strong class="text-gray-200">English (US)</strong>
+        </div>
+        <button id="start-btn" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium px-8 py-3.5 rounded-xl shadow-lg shadow-blue-600/10 transition flex items-center justify-center space-x-2">
+          <span>🎙️</span>
+          <span>Start Live Captions</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- VIEW 2: FILE TRANSCRIPTS TAB (HIDDEN BY DEFAULT) -->
+    <section id="view-file" class="flex-1 flex flex-col p-6 overflow-hidden hidden">
+      <div class="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-gray-800 hover:border-gray-700 transition rounded-2xl bg-gray-900/40 p-8 cursor-pointer">
+        <span class="text-4xl mb-3">📤</span>
+        <h3 class="text-lg font-medium mb-1">Upload an audio or video file</h3>
+        <p class="text-sm text-gray-400 text-center max-w-xs mb-4">Supports MP3, WAV, M4A, or MP4 up to 25MB</p>
+        <button class="bg-gray-800 hover:bg-gray-700 text-gray-200 text-sm font-medium px-4 py-2 rounded-lg border border-gray-700 transition">
+          Browse Files
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- POPUP PAYWALL MODAL (HIDDEN BY DEFAULT) -->
+  <div id="paywall-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-gray-900 border border-gray-800 rounded-2xl max-w-sm w-full p-6 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+      <button onclick="closePaywall()" class="absolute top-4 right-4 text-gray-500 hover:text-gray-300 text-lg">&times;</button>
+      <div class="text-center">
+        <span class="text-4xl">👑</span>
+        <h3 class="text-xl font-bold mt-3 mb-2">Upgrade to Pro</h3>
+        <p class="text-sm text-gray-400 mb-6">You've reached your free daily limit. Unlock limitless processing power instantly.</p>
+        
+        <div class="bg-gray-950 rounded-xl p-4 border border-gray-800 mb-6 text-left space-y-2.5 text-sm">
+          <div class="flex items-center text-gray-300">✅ <span class="ml-2">Unlimited Live Captions</span></div>
+          <div class="flex items-center text-gray-300">✅ <span class="ml-2">Full Audio & Video File Uploads</span></div>
+          <div class="flex items-center text-gray-300">✅ <span class="ml-2">Export to PDF, TXT, and SRT Subtitles</span></div>
+        </div>
+
+        <!-- Replace URL below with your actual free Stripe Payment Link -->
+        <a href="https://stripe.com" target="_blank" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition shadow-lg shadow-blue-600/20">
+          Unlock Everything - $9 Once
+        </a>
+        <p class="text-xs text-gray-500 mt-3">One-time payment. Secure checkout powered by Stripe.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CORE LOGIC ENGINE SCRIPT -->
+  <script>
+    // Tab Navigation Handling Switcher
+    function switchTab(tab) {
+      const liveView = document.getElementById('view-live');
+      const fileView = document.getElementById('view-file');
+      const navLive = document.getElementById('nav-live');
+      const navFile = document.getElementById('nav-file');
+      const viewTitle = document.getElementById('view-title');
+
+      if (tab === 'live') {
+        liveView.classList.remove('hidden');
+        fileView.classList.add('hidden');
+        viewTitle.innerText = "Live Captions Studio";
+        navLive.className = "w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition bg-blue-600/10 text-blue-400 border border-blue-500/20";
+        navFile.className = "w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition text-gray-400 hover:bg-gray-800 hover:text-gray-200";
+      } else {
+        liveView.classList.add('hidden');
+        fileView.classList.remove('hidden');
+        viewTitle.innerText = "File Upload Dashboard";
+        navFile.className = "w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition bg-blue-600/10 text-blue-400 border border-blue-500/20";
+        navLive.className = "w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition text-gray-400 hover:bg-gray-800 hover:text-gray-200";
+      }
+    }
+
+    // Modal Display Controls
+    function showPaywall() { document.getElementById('paywall-modal').classList.remove('hidden'); }
+    function closePaywall() { document.getElementById('paywall-modal').classList.add('hidden'); }
+
+    // --- INTEGRATED NATIVE LIVE SPEECH ENGINE ---
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      document.getElementById('caption-display').innerHTML = '<p class="text-red-400">Speech recognition is unavailable on this browser. Please load this page in Google Chrome or Safari.</p>';
+    } else {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+
+      let isListening = false;
+      let finalTranscript = '';
+      let simulationCounter = 0; // Simple simulation tracker for the free tier visual indicator
+
+      const startBtn = document.getElementById('start-btn');
+      const captionDisplay = document.getElementById('caption-display');
+      const statusIndicator = document.getElementById('status-indicator');
+      const usageBar = document.getElementById('usage-bar');
+      const usageText = document.getElementById('usage-text');
+
+      startBtn.addEventListener('click', () => {
+        if (!isListening) {
+          recognition.start();
+        } else {
+          recognition.stop();
+        }
+      });
+
+      recognition.onstart = () => {
+        isListening = true;
+        startBtn.innerHTML = '<span>🛑</span> <span>Stop Captions</span>';
+        startBtn.className = "w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-medium px-8 py-3.5 rounded-xl shadow-lg shadow-red-600/10 transition flex items-center justify-center space-x-2";
+        statusIndicator.innerText = "Listening...";
+        statusIndicator.className = "text-red-400 font-medium";
+        
