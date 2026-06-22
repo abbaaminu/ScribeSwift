@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ScribeSwift - Free Live Captions & Transcripts</title>
   <!-- Tailwind CSS CDN for instant styling injection -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://tailwindcss.com"></script>
   <style>
     /* Premium custom neon glow styles and fast-rotating animation rings */
     .neon-text-glow { text-shadow: 0 0 10px rgba(0, 229, 255, 0.4); }
@@ -23,7 +23,7 @@
   </div>
 
   <!-- ================= SIDEBAR NAVIGATION ================= -->
-  <aside id="app-sidebar" class="w-full md:w-64 bg-[#0F172A] border-b md:border-b-0 md:border-r border-gray-800/80 p-6 flex flex-col justify-between z-10 opacity-0 transition-opacity duration-300 pointer-events-none">
+  <aside id="app-sidebar" class="w-full md:w-64 bg-[#0F172A] border-b md:border-b-0 md:border-r border-gray-800/80 p-6 flex flex-col justify-between z-10 hidden">
     <div>
       <!-- App Brand Logo Branding -->
       <div class="flex items-center space-x-3 mb-8">
@@ -68,7 +68,7 @@
   </aside>
 
   <!-- ================= MAIN DASHBOARD APP CONTAINER ================= -->
-  <main id="app-main-content" class="flex-1 flex flex-col h-full overflow-hidden opacity-0 transition-opacity duration-300 pointer-events-none">
+  <main id="app-main-content" class="flex-1 flex flex-col h-full overflow-hidden hidden">
     
     <!-- TOP HEADER SYSTEM BAR -->
     <header class="h-16 border-b border-gray-800/80 px-6 flex items-center justify-between bg-[#0F172A]/40 backdrop-blur">
@@ -157,3 +157,5 @@
 
           <!-- Plan Option 2: Cheap Subscription -->
           <div class="bg-gray-950 border-2 border-blue-500 rounded-xl p-4 flex flex-col justify-between text-left relative">
+            <span class="absolute -top-2.5 right-3 bg-blue-600 text-white font-extrabold text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider">Best Value</span>
+            <div>
